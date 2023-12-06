@@ -20,4 +20,3 @@ jobs:
       working-directory: ./dotnet
     - name: Run your tests
       run: dotnet test
-      working-directory: ./dotnet
