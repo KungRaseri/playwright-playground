@@ -3,7 +3,8 @@ import { test, expect } from '@playwright/test';
 test.describe("The Internet", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://the-internet.herokuapp.com/');
-  })
+  });
+
   test('A/B Testing - with `codegen`', async ({ page }) => {
     await page.getByRole('link', { name: 'A/B Testing' }).click();
 
@@ -25,6 +26,12 @@ test.describe("The Internet", () => {
   });
 
   test('Basic Authentication', async ({ page }) => {
+    await page.getByRole('link', { name: 'Basic Auth' }).click();
 
   });
+
+  test('Broken Images', async ({page}) => {
+    await page.getByRole('link', {name: 'Broken Images'}).click();
+    
+  })
 })

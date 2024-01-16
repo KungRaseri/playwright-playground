@@ -24,22 +24,29 @@ public class TheInternetTests : PageTest
     [Test]
     public async Task AddAndRemoveElements()
     {
-        await Page.GetByRole(AriaRole.Link, new() {Name = "Add/Remove Elements"}).ClickAsync();
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Add/Remove Elements" }).ClickAsync();
 
-        await Page.GetByRole(AriaRole.Button, new() {Name = "Add Element"}).ClickAsync();
-        await Page.GetByRole(AriaRole.Button, new() {Name = "Add Element"}).ClickAsync();
-        await Page.GetByRole(AriaRole.Button, new() {Name = "Add Element"}).ClickAsync();
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Add Element" }).ClickAsync();
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Add Element" }).ClickAsync();
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Add Element" }).ClickAsync();
 
-        await Expect(Page.GetByRole(AriaRole.Button, new() {Name = "Delete"})).ToHaveCountAsync(3);
+        await Expect(Page.GetByRole(AriaRole.Button, new() { Name = "Delete" })).ToHaveCountAsync(3);
 
-        await Page.GetByRole(AriaRole.Button, new() {Name = "delete"}).Nth(1).ClickAsync();
-     
-        await Expect(Page.GetByRole(AriaRole.Button, new() {Name = "Delete"})).ToHaveCountAsync(2);
+        await Page.GetByRole(AriaRole.Button, new() { Name = "delete" }).Nth(1).ClickAsync();
+
+        await Expect(Page.GetByRole(AriaRole.Button, new() { Name = "Delete" })).ToHaveCountAsync(2);
     }
 
     [Test]
     public async Task BasicAuthentication()
     {
-        await Page.GetByRole(AriaRole.Link, new() {Name = "Basic Auth"}).ClickAsync();
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Basic Auth" }).ClickAsync();
+
+    }
+
+    [Test]
+    public async Task BrokenImages()
+    {
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Broken Images" }).ClickAsync();
     }
 }

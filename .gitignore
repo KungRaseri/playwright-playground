@@ -556,4 +556,6 @@ FodyWeavers.xsd
 playwright-report/
 test-results/
 
+playwright/.auth/
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,node
