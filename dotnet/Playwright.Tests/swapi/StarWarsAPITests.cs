@@ -1,5 +1,4 @@
 
-using System.Text.Json;
 using Newtonsoft.Json;
 using Playwright.Tests.swapi;
 
@@ -8,7 +7,7 @@ namespace Playwright.Tests;
 [TestFixture]
 public class StarWarsAPITests : PlaywrightTest
 {
-    private IAPIRequestContext Request = null;
+    public required IAPIRequestContext Request;
 
     [SetUp]
     public async Task Setup()
@@ -32,10 +31,12 @@ public class StarWarsAPITests : PlaywrightTest
 
         var planets = JsonConvert.DeserializeObject<GetPlanetsResult>(planetsResult);
 
-        Assert.That(planets?.count, Is.EqualTo(60));
-        Assert.That(planets?.results.Length, Is.EqualTo(10));
-
-        Assert.True(response.Ok);
+        Assert.Multiple(() =>
+        {
+            Assert.That(planets?.count, Is.EqualTo(60));
+            Assert.That(planets?.results.Length, Is.EqualTo(10));
+            Assert.That(response.Ok, Is.True);
+        });
     }
 
     [Test]
@@ -48,10 +49,13 @@ public class StarWarsAPITests : PlaywrightTest
         var planet = JsonConvert.DeserializeObject<Planet>(planetResult);
 
         Assert.That(planet, Is.Not.Null);
-        Assert.That(planet.name, Is.EqualTo("Tatooine"));
-        Assert.That(planet.population, Is.EqualTo("200000"));
 
-        Assert.True(response.Ok);
+        Assert.Multiple(() =>
+        {
+            Assert.That(planet.name, Is.EqualTo("Tatooine"));
+            Assert.That(planet.population, Is.EqualTo("200000"));
+            Assert.That(response.Ok, Is.True);
+        });
     }
 
     private async Task CreateAPIRequestContext()

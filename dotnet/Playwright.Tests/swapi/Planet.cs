@@ -2,19 +2,19 @@ namespace Playwright.Tests.swapi
 {
     public class Planet
     {
-        public string name;
-        public string diameter;
-        public string rotationPeriod;
-        public string orbitalPeriod;
-        public string gravity;
-        public string population;
-        public string climate;
-        public string terrain;
-        public string surface_water;
-        public string[] residents;
-        public string[] films;
-        public string url;
-        public DateTime created;
-        public DateTime edited;
+        public required string name;
+        public required string diameter;
+        public required string rotationPeriod;
+        public required string orbitalPeriod;
+        public required string gravity;
+        public required string population;
+        public required string climate;
+        public required string terrain;
+        public required string surface_water;
+        public required string[] residents;
+        public required string[] films;
+        public required string url;
+        public required DateTime created;
+        public required DateTime edited;
     }
 }

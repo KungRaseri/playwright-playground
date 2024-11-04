@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe("The Internet", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, browser }) => {
     await page.goto('http://the-internet.herokuapp.com/');
   });
 
@@ -27,11 +27,18 @@ test.describe("The Internet", () => {
 
   test('Basic Authentication', async ({ page }) => {
     await page.getByRole('link', { name: 'Basic Auth' }).click();
-
   });
 
-  test('Broken Images', async ({page}) => {
-    await page.getByRole('link', {name: 'Broken Images'}).click();
-    
+  test('Broken Images', async ({ page }) => {
+    await page.getByRole('link', { name: 'Broken Images' }).click();
+  })
+
+  test('Challenging DOM', async ({ page }) => {
+    await page.getByRole('link', { name: 'Challenging DOM' }).click();
+  })
+
+  test('Checkboxes', async ({ page }) => {
+    await page.getByRole('link', { name: 'Checkboxes' }).click();
+
   })
 })

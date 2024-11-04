@@ -49,4 +49,17 @@ public class TheInternetTests : PageTest
     {
         await Page.GetByRole(AriaRole.Link, new() { Name = "Broken Images" }).ClickAsync();
     }
+
+    [Test]
+    public async Task ChallengingDOM()
+    {
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Challenging DOM" }).ClickAsync();
+    }
+
+    [Test]
+    public async Task Checkboxes()
+    {
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Checkboxes" }).ClickAsync();
+        
+    }
 }

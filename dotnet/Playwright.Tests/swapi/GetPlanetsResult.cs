@@ -2,10 +2,10 @@ namespace Playwright.Tests.swapi
 {
     public class GetPlanetsResult
     {
-        public int count;
-        public string? next;
-        public string? previous;
-        public Planet[] results;
+        public required int count;
+        public required string? next;
+        public required string? previous;
+        public required Planet[] results;
 
     }
 }
