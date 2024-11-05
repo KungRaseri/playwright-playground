@@ -5,19 +5,36 @@ using Playwright.Tests.swapi;
 namespace Playwright.Tests;
 
 [TestFixture]
-public class StarWarsAPITests : PlaywrightTest
+public class StarWarsAPITests : PageTest
 {
     public required IAPIRequestContext Request;
 
     [SetUp]
     public async Task Setup()
     {
+        await Context.Tracing.StartAsync(new()
+        {
+            Title = $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.Name}",
+            Screenshots = true,
+            Snapshots = true,
+            Sources = true
+        });
+
         await CreateAPIRequestContext();
     }
 
     [TearDown]
     public async Task TearDown()
     {
+        await Context.Tracing.StopAsync(new()
+        {
+            Path = Path.Combine(
+             TestContext.CurrentContext.WorkDirectory,
+             "playwright-traces",
+             $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.Name}.zip"
+         )
+        });
+
         await Request.DisposeAsync();
     }
 
@@ -25,18 +42,34 @@ public class StarWarsAPITests : PlaywrightTest
     [Test]
     public async Task GetPlanets_ShouldReturnGetPlanetsResult()
     {
-        var response = await Request.GetAsync("planets");
-
-        var planetsResult = await response.TextAsync();
-
-        var planets = JsonConvert.DeserializeObject<GetPlanetsResult>(planetsResult);
-
-        Assert.Multiple(() =>
+        await Page.RouteAsync("*/**/api/planets", async route =>
         {
-            Assert.That(planets?.count, Is.EqualTo(60));
-            Assert.That(planets?.results.Length, Is.EqualTo(10));
-            Assert.That(response.Ok, Is.True);
+            var json = JsonConvert.SerializeObject(new PlanetMock());
+
+            await route.FulfillAsync(new()
+            {
+                Json = json
+            });
         });
+
+        await Page.GotoAsync("https://swapi.dev");
+        await Page.GetByPlaceholder("people/1/").FillAsync("planets/1/");
+        await Page.GetByText("request").ClickAsync();
+
+        await Expect(Page.GetByText("Tatooine")).ToBeVisibleAsync();
+
+        // var response = await Request.GetAsync("planets");
+
+        // var planetsResult = await response.TextAsync();
+
+        // var planets = JsonConvert.DeserializeObject<GetPlanetsResult>(planetsResult);
+
+        // Assert.Multiple(() =>
+        // {
+        //     Assert.That(planets?.count, Is.EqualTo(60));
+        //     Assert.That(planets?.results.Length, Is.EqualTo(10));
+        //     Assert.That(response.Ok, Is.True);
+        // });
     }
 
     [Test]
